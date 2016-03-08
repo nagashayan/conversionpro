@@ -20,13 +20,38 @@
         
         <% 
             out.println("To out-put All the request parameters received from request - ");
-
-Enumeration enParams = request.getParameterNames(); 
-while(enParams.hasMoreElements()){
- String paramName = (String)enParams.nextElement();
- out.println("number - "+paramName+", conversion - "+request.getParameter(paramName));
-}
-        
+            int correctanscount = 0;
+            String number = "";
+            Enumeration enParams = request.getParameterNames(); 
+            while(enParams.hasMoreElements()){
+             if(correctanscount < 10){   
+             String paramName = (String)enParams.nextElement();
+             
+             out.println("number - "+paramName+", conversion - "+request.getParameter(paramName));
+             if(paramName == "num"){
+                number = request.getParameter(paramName);
+            }
+             else if(paramName == "val"){
+                 //it will be value
+                 if(number != ""){
+                     String res = Integer.toBinaryString(Integer.parseInt(number));
+                     if(res ==  number){
+                         correctanscount++;
+                     }
+                 }
+             }
+             }
+             //else{
+                 //user has passed to second round
+                 //response.sendRedirect("/Numberconversionpro/index.jsp?result=1&&nextlevel=2");
+                String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel=2");
+                response.setStatus(response.SC_MOVED_TEMPORARILY);
+                response.setHeader("Location", site); 
+                 
+            // }
+            }
+            
+         
         %>
     </body>
 </html>
