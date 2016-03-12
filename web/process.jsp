@@ -21,30 +21,40 @@
         <% 
             out.println("To out-put All the request parameters received from request - ");
             int correctanscount = 0;
-            String number = "";
+            String number = "",level = "";
             Enumeration enParams = request.getParameterNames(); 
             while(enParams.hasMoreElements()){
              if(correctanscount < 10){   
              String paramName = (String)enParams.nextElement();
              
-             out.println("number - "+paramName+", conversion - "+request.getParameter(paramName));
-             if(paramName == "num"){
-                number = request.getParameter(paramName);
+             //out.println("name - "+paramName+", value - "+request.getParameter(paramName));
+             
+            if(paramName.equals("num")){
+                 out.println("in 1");
+                number = request.getParameter(paramName).trim();
             }
-             else if(paramName == "val"){
+             else if(paramName.equals("val")){
+                 out.println("in 2");
                  //it will be value
                  if(number != ""){
                      String res = Integer.toBinaryString(Integer.parseInt(number));
                      if(res ==  number){
                          correctanscount++;
                      }
-                 }
+                 }  
              }
+             else if(paramName.equals("level")){
+                 out.println("in level");
+                level = request.getParameter(paramName).trim(); 
+             }
+             
              }
              //else{
                  //user has passed to second round
                  //response.sendRedirect("/Numberconversionpro/index.jsp?result=1&&nextlevel=2");
-                String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel=2");
+                 int temp = (Integer.parseInt(level)) + 1;
+                
+                String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel="+temp);
                 response.setStatus(response.SC_MOVED_TEMPORARILY);
                 response.setHeader("Location", site); 
                  

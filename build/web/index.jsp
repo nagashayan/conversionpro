@@ -46,29 +46,35 @@ and open the template in the editor.
     <div class="container">
 
 <% 
+    String level = "1";
     Enumeration enParams = request.getParameterNames(); 
             while(enParams.hasMoreElements()){
             
              String paramName = (String)enParams.nextElement();
              
-            // out.println("number - "+paramName+" conversion - "+request.getParameter(paramName));
+             out.println("name - "+paramName+" value - "+request.getParameter(paramName));
              if(paramName.equals("result")){
                 out.println("pass");
-            }
-             
-             if(paramName.equals("nextlevel")){
-                 out.println("you are going to "+request.getParameter(paramName));
              }
+                if(paramName.equals("nextlevel")){
+                 out.println("you are going to "+request.getParameter(paramName));
+                 level = request.getParameter(paramName).trim();
              
             }
+             
+            }
+            out.println(level);
     %>
         <div class="page-header">
             <h2>Welcome to Number Conversion Game</h2>
         </div>  
-        <a  class="btn btn-primary" id="start">Start Game (Level 1)</a>
+    <% if (Integer.parseInt(level) < 4) { %>
+        <a  class="btn btn-primary" id="start">Start Game (Level <% out.println(level); %>)</a>
+        <% } %>
         <div class="row">
+             <% if (Integer.parseInt(level) < 4) { %>
             <div class="col-lg-4">
-
+             
                 <form method = "post" action ="/Numberconversionpro/process.jsp">
                     From: Decimal to 
                     <select>
@@ -76,6 +82,7 @@ and open the template in the editor.
                         <option value="binary" name="ocatal">Octal</option>
                         <option value="binary" name="hexa">Hexa</option>
                     </select>
+                    <input name="level" type="hidden" value="<% out.println(level);%>" />
                     <h3>Enter values here</h3>
                     <table class="table">
                         <thead>
@@ -93,10 +100,12 @@ and open the template in the editor.
 
                     <input type="submit" value="Submit"/>
                 </form>
+                    
             </div>
             <div class="col-lg-8">
+                
                 <div class="pull-right"> Timer: <span id="timer">10</span></div>
-                <div id="parent">
+                <div id="parent" style="display: none">
                     <% for (int i = 0; i < 3; i++) {
                             Random rand = new Random();
                             int n = rand.nextInt(100) + 1;
@@ -117,18 +126,21 @@ and open the template in the editor.
                     <div id="results_div">&nbsp;</div>
                 </div>
             </div>
+                <% } else { %>
+                <div class="col-xs-12"><h2>Congratulations you succesfully completed all the level</h2></div>
+                <% } %>
         </div>
 
     </div>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="/Numberconversionpro/jquery.min.js"></script>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/Numberconversionpro/bootstrap.min.css" crossorigin="anonymous">
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="/Numberconversionpro/bootstrap.min.js" crossorigin="anonymous"></script>
     <script>
     jQuery.fn.verticalMarquee = function (vertSpeed, horiSpeed, index) {
 
@@ -187,6 +199,8 @@ and open the template in the editor.
             value = 10;
 
     $("#start").click(function () {
+        console.log("clicked start");
+        $("#parent").show();
         if (timer !== null)
             return;
         timer = setInterval(function () {
