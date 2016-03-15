@@ -46,17 +46,27 @@ and open the template in the editor.
     <div class="container">
 
 <% 
-    String level = "1";
+    String level = "1",resultdisp="";
+    int result = 0,intlevel;
     Enumeration enParams = request.getParameterNames(); 
             while(enParams.hasMoreElements()){
             
              String paramName = (String)enParams.nextElement();
              
-             out.println("name - "+paramName+" value - "+request.getParameter(paramName));
-             if(paramName.equals("result")){
-                out.println("pass");
+             //out.println("name - "+paramName+" value - "+request.getParameter(paramName));
+             if(paramName.equals("result")){ 
+                 result = Integer.parseInt(request.getParameter(paramName).trim());
+                 if(result == 1){
+                     out.println("pass");
+                     resultdisp = "Congratualations you have succesfuly advanced next level";
+                 }
+                 else if(result == 0){
+                     out.println("fail");
+                     resultdisp = "Sorry! you have failed this level";
+                 }
+                
              }
-                if(paramName.equals("nextlevel")){
+            if(paramName.equals("nextlevel")){
                  out.println("you are going to "+request.getParameter(paramName));
                  level = request.getParameter(paramName).trim();
              
@@ -64,6 +74,7 @@ and open the template in the editor.
              
             }
             out.println(level);
+            intlevel = Integer.parseInt(level);
     %>
         <div class="page-header">
             <h2>Welcome to Number Conversion Game</h2>
@@ -103,10 +114,10 @@ and open the template in the editor.
                     
             </div>
             <div class="col-lg-8">
-                
+                <div class="row" id="result_disp" ><div class="col-lg-12"><h3><% out.println(resultdisp); %></h3></div></div>
                 <div class="pull-right"> Timer: <span id="timer">10</span></div>
                 <div id="parent" style="display: none">
-                    <% for (int i = 0; i < 3; i++) {
+                    <% for (int i = 0; i < ((level == "1") ? 10 : level == "2" ? 20 :  20); i++) {
                             Random rand = new Random();
                             int n = rand.nextInt(100) + 1;
                             System.out.println(n);
@@ -127,7 +138,7 @@ and open the template in the editor.
                 </div>
             </div>
                 <% } else { %>
-                <div class="col-xs-12"><h2>Congratulations you succesfully completed all the level</h2></div>
+                <div id="result_div" class="col-xs-12"><h2>Congratulations you succesfully completed all the level</h2></div>
                 <% } %>
         </div>
 
@@ -197,15 +208,31 @@ and open the template in the editor.
     var timer = null,
             interval = 1000,
             value = 10;
-
+    var level = "<% out.print(level); %>";
+    if( level == "1")
+            value = 30;
+        else if(level == "2")
+            value = 20;
+        else if(level == "3")
+            value = 20;
+        $("#timer").html(value);
+        console.log("value="+value); 
     $("#start").click(function () {
         console.log("clicked start");
+        timer = null,
+            interval = 1000;
+            
+
+        $("#secondary_div").hide();
+        $("#result_div").hide();
+        $("#result_disp").hide();
         $("#parent").show();
+        
         if (timer !== null)
             return;
         timer = setInterval(function () {
             value = value - 1;
-            if (value == -1) {
+            if (value == 0) {
                 clearInterval(timer);
                 timer = null;
                 $("#parent").hide();

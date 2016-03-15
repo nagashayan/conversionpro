@@ -49,19 +49,31 @@
              }
              
              }
-             //else{
-                 //user has passed to second round
-                 //response.sendRedirect("/Numberconversionpro/index.jsp?result=1&&nextlevel=2");
-                 int temp = (Integer.parseInt(level)) + 1;
-                
-                String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel="+temp);
-                response.setStatus(response.SC_MOVED_TEMPORARILY);
-                response.setHeader("Location", site); 
-                 
-            // }
+             
             }
-            
+         //for each level different answer count
+         int anscount = 2,temp = (Integer.parseInt(level));
+         if(temp == 2){
+             anscount = 3;
+         }
+         else if(temp == 3){
+             anscount = 4;
+         }
          
+         if(correctanscount >= anscount){
+            //user has passed to second round
+
+           String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel="+temp+1);
+           response.setStatus(response.SC_MOVED_TEMPORARILY);
+           response.setHeader("Location", site); 
+                 
+             }
+         else{
+            //level failed
+            String site = new String("/Numberconversionpro/index.jsp?result=0&&nextlevel="+temp);
+            response.setStatus(response.SC_MOVED_TEMPORARILY);
+            response.setHeader("Location", site);   
+         }
         %>
     </body>
 </html>
