@@ -1,0 +1,69 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 21, 2016, 9:02:33 PM
+   
+*/
+
+
+body{
+    background-color:#00AAAA !important;
+}
+
+.wrapper{
+    height: 800px;
+    background-color:#ffffff;
+}
+.page-header{
+    background: url(http://localhost:8080/Numberconversionpro/bubblebg.jpg);
+    padding: 45px;
+    margin: 0px !important;
+    background-position: center;
+}
+#parent {
+
+    left: 0;
+    bottom: 0;
+    width: 400px;
+    height: 100%;
+    display: block
+
+}
+
+.message,.message-1 {
+    position: absolute;
+    height: 120px;
+    width: 120px;
+    background-color: orange;
+    color: white;
+    z-index: 9999;
+    line-height: 115px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    border-radius: 60px;
+    margin-top: 700px;
+
+}
+.message-1{
+    float: right;
+    left: 150px;
+}
+input{
+    color: black !important;
+}
+.main-container{
+    margin-top: 27px;
+}
+/* Set black background color, white text and some padding */
+footer {
+    background-color: #555;
+    color: white;
+    padding: 35px;
+}

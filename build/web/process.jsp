@@ -66,12 +66,12 @@
              
             }
          //for each level different answer count
-         int anscount = 2,temp = (Integer.parseInt(level));
+         int anscount = 6,temp = (Integer.parseInt(level));
          if(temp == 2){
-             anscount = 3;
+             anscount = 7;
          }
          else if(temp == 3){
-             anscount = 4;
+             anscount = 6;
          }
          
          if(correctanscount >= anscount){
