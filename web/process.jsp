@@ -35,19 +35,19 @@
                  number = request.getParameter(paramName).trim();
             }
              else if(paramName.indexOf("val") != -1){
-                 out.println("in 2");
+                 out.println("in 2"+type);
                  //it will be value
                  value = request.getParameter(paramName).trim();
                 
                  if(number.length() > 0){
-                     if(type == "bin")
+                     if(type.equals("bin"))
                         res = Integer.toBinaryString(Integer.parseInt(number));
-                     else if(type == "hex")
+                     else if(type.equals("hexa"))
                         res = Integer.toHexString(Integer.parseInt(number));
-                     else if(type == "oct")
+                     else if(type.equals("octal"))
                         res = Integer.toOctalString(Integer.parseInt(number));
                      out.println("checking val="+value+"res ="+res);
-                     if(res.trim().equals(value.trim())){
+                     if(res.trim().toUpperCase().equals(value.trim())){
                          out.println("its correct");
                          correctanscount++;
                      } 
@@ -57,32 +57,10 @@
                  out.println("in level");
                 level = request.getParameter(paramName).trim(); 
              }
-             else if(paramName.equals("type")){
+             else if(paramName.equals("selectmenu")){
                  out.println("in type");
                 type = request.getParameter(paramName).trim(); 
              }
-            /* else{
-                 //this will be value
-               // out.println("in 2");
-                 if(paramName.trim() != ""){
-                 number = request.getParameter(paramName).trim();
-                 //out.println(number+"numberafter"+number.length());
-                 //it will be value
-                 if(number.length() > 0){
-                     if(type == "bin")
-                        res = Integer.toBinaryString(Integer.parseInt(number));
-                     else if(type == "hex")
-                        res = Integer.toHexString(Integer.parseInt(number));
-                     else if(type == "oct")
-                        res = Integer.toOctalString(Integer.parseInt(number));
-                     out.println("res ="+res);
-                     if(res ==  number){
-                         out.println("its correct");
-                         correctanscount++;
-                     } 
-                 }
-                 }
-             } */
              
              }
              
@@ -99,18 +77,18 @@
          if(correctanscount >= anscount){
             //user has passed to second round
 
-        /*   String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel="+(temp+1));
+         String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel="+(temp+1));
            response.setStatus(response.SC_MOVED_TEMPORARILY);
            response.setHeader("Location", site); 
-*/
+
                  
              }
          else{
             //level failed
-        /*    String site = new String("/Numberconversionpro/index.jsp?result=0&&nextlevel="+temp);
+            String site = new String("/Numberconversionpro/index.jsp?result=0&&nextlevel="+temp);
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader("Location", site);   
-*/
+
          }
         %>
     </body>

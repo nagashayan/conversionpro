@@ -93,13 +93,13 @@ and open the template in the editor.
         <div class="row">
             <% if (Integer.parseInt(level) < 4) { %>
             <div class="col-lg-4">
-
+                
                 <form method = "post" action ="/Numberconversionpro/process.jsp" id="main-form">
                     From: Decimal to 
                     <select name="selectmenu" form="main-form">
                         <option value="binary" >Binary</option>
-                        <option value="binary" >Octal</option>
-                        <option value="binary" >Hexa</option>
+                        <option value="octal" >Octal</option>
+                        <option value="hexa" >Hexa</option>
                     </select>
                     <input name="level" type="hidden" value="<% out.println(level);%>" />
                     <h3>Enter values here</h3>
@@ -116,7 +116,7 @@ and open the template in the editor.
 
                         </tbody>
                     </table>
-
+                    
                     <input type="submit" value="Submit"/>
                 </form>
 
@@ -197,7 +197,7 @@ and open the template in the editor.
 
             var val = Math.floor((Math.random() * 100) + 1);
             $("#tbodyele").prepend("<tr><td>" + val + "</td><td>\n\
-        <input type='hidden' name='num" + val + "' value='" + val + "'/><input type='number' name='val" + val + "'/></td>\n\
+        <input type='hidden' name='num" + val + "' value='" + val + "'/><input type='text' name='val" + val + "'/></td>\n\
             </tr>");
             $('#tbodyele :input:visible:enabled:first').focus();
             $(this).off("click");
