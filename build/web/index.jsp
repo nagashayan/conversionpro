@@ -51,6 +51,7 @@ and open the template in the editor.
         input{
             color: black !important;
         }
+        
     </style>
     <div class="container">
 
@@ -103,7 +104,7 @@ and open the template in the editor.
                     </select>
                     <input name="level" type="hidden" value="<% out.println(level);%>" />
                     <h3>Enter values here</h3>
-                    <table class="table">
+                    <table class="table" id="inputtable">
                         <thead>
                             <tr>
                                 <th>Selected Number</th>
@@ -232,6 +233,7 @@ and open the template in the editor.
                     $(ele).hide("slow", function () {
                         $(ele).css('margin-top', '700px');
                         $(this).html("Click Me");
+                        $(this).off("click");
 
                     });
                     console.log("after" + $(ele).css('margin-top'));
@@ -297,6 +299,7 @@ and open the template in the editor.
                     $("#parent").hide();
                     $("#secondary_div").show();
                     console.log("showing secondary");
+                    $("#inputtable").find("input,button,textarea,select").attr("disabled", "disabled");
                 }
                 $("#timer").html(value);
             }, interval);
