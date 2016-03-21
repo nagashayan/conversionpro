@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            #parent {
+
+    left: 0;
+    bottom: 0;
+    width: 400px;
+    height: 100%;
+    
+}
+
+.message,.message-1 {
+    position: absolute;
+    height: 120px;
+    width: 120px;
+    background-color: orange;
+    color: white;
+    z-index: -9999;
+    line-height: 115px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    border-radius: 60px;
+    margin-top: 700px;
+    
+}
+.message-1{
+    float: right;
+    left: 150px;
+}
+            </style>
+            
+    <div id="parent">
+      
+    <div class="message 1" style="display:none" onclick="clicked()"><span id="header_5">Click for number</span><span id="open_5"><span id="number_5"></span> 
+        </span>
+    </div>
+    <div class="message 2" style="display:none" onclick="clicked()"> <span id="header_1">Click for number</span><span id="open_1"> <span id="number_1"></span></span></div>
+    <div class="message 3" style="display:none" onclick="clicked()"> <span id="header_2">Click for number</span><span id="open_2"> <span id="number_2"></span></span></div>
+    <div class="message 4" style="display:none" onclick="clicked()"> <span id="header_3">Click for number</span><span id="open_3"> <span id="number_3"></span></span></div>
+    <div class="message 5" style="display:none" onclick="clicked()"> <span id="header_4">Click for number</span><span id="open_4"> <span id="number_4"></span></span></div>
+    
+    <!-- <div class="message-1 1" style="display:none"> <span id="header_">Click for number</span><span id="open_"> <span id="number_"></span></span></div>
+    <div class="message-1 2" style="display:none"> <span id="header_">Click for number</span><span id="open_"> <span id="number_"></span></span></div>
+    <div class="message-1 3" style="display:none"> <span id="header_">Click for number</span><span id="open_"> <span id="number_"></span></span></div>
+    <div class="message-1 4" style="display:none"> <span id="header_">Click for number</span><span id="open_"> <span id="number_"></span></span></div>
+    <div class="message-1 5" style="display:none"> <span id="header_">Click for number</span><span id="open_"> <span id="number_"></span></span></div>
+    -->
+    </div>
+        <script src="/Numberconversionpro/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/Numberconversionpro/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/Numberconversionpro/bootstrap.min.js" crossorigin="anonymous"></script>
+    
+        <script>
+        
+        function clicked() {
+            console.log("clicked"+$(this));
+            $(this).hide();
+            
+        }
+    
+        var i = 0;
+        /**
+         * 
+         * for all even numbers
+         */
+        setInterval(function() {
+           if(i == 6)
+                i = 0;
+            console.log("func");
+            
+                console.log("iterating");
+                var ele = $(".message")[i];
+                console.log(ele);
+                //$(ele).
+                $(ele).show();
+                $(ele).animate({'margin-top': '50px'}, 6000,(function(ele){
+                    return function(){
+                   console.log("moved");
+                    console.log(ele);
+                    $(ele).hide( "slow",function(){
+                        $(ele).css('margin-top','700px');
+                    });
+                    
+                }
+                })(ele));
+                
+                i=i+2;
+             
+         }, 5000);
+         
+         /**
+         * 
+         * for all odd numbers
+         */
+        
+       /*  var j = 1;
+         setInterval(function() {
+           if(j == 5)
+                j = 1;
+            console.log("func");
+              
+
+                console.log("iterating");
+                var ele = $(".message")[j];
+                console.log(ele);
+                $(ele).show();
+                $(ele).animate({'margin-top': '50px'}, 6000,(function(ele){
+                    return function(){
+                   console.log("moved");
+                    console.log(ele);
+                    $(ele).hide( "slow",function(){
+                        $(ele).css('margin-top','700px');
+                    });
+                    
+                }
+                })(ele));
+                j = j+2;
+                
+                
+                
+                
+            
+         }, 3000);
+         
+         /**
+          * 
+          * another div even
+          */
+        /* var k = 0;
+        setInterval(function() {
+           if(k == 6)
+                k = 0;
+            console.log("func");
+            
+                console.log("iterating");
+                var ele = $(".message-1")[k];
+                console.log(ele);
+                $(ele).show();
+                $(ele).animate({'margin-top': '50px'}, 4000,(function(ele){
+                    return function(){
+                   console.log("moved");
+                    console.log(ele);
+                    $(ele).hide( "slow",function(){
+                        $(ele).css('margin-top','700px');
+                    });
+                    
+                }
+                })(ele));
+                
+                k=k+2;
+             
+         }, 1500);
+         */
+         /**
+          * 
+          * another div even
+          */
+        
+     /*    var l = 1;
+         setInterval(function() {
+           if(l == 5)
+                l = 1;
+            console.log("func");
+
+                console.log("iterating");
+                var ele = $(".message-1")[j];
+                console.log(ele);
+                $(ele).show();
+                $(ele).animate({'margin-top': '50px'}, 2500,(function(ele){
+                    return function(){
+                   console.log("moved");
+                    console.log(ele);
+                    $(ele).hide( "slow",function(){
+                        $(ele).css('margin-top','700px');
+                    });
+                    
+                }
+                })(ele));
+                l = l+2;
+                
+                
+                
+                
+            
+         }, 3500);
+         */
+            </script>
+    </body>
+</html>

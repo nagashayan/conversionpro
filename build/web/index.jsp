@@ -15,20 +15,24 @@ and open the template in the editor.
 </head>
 <body>
     <style>
-        parent {
+
+        #parent {
 
             left: 0;
-            top: 0;
+            bottom: 0;
             width: 400px;
             height: 100%;
+            display: block
+
         }
 
         .message,.message-1 {
+            position: absolute;
             height: 120px;
             width: 120px;
             background-color: orange;
             color: white;
-            z-index: -9999;
+            z-index: 9999;
             line-height: 115px;
             text-align: center;
             font-family: Arial, sans-serif;
@@ -37,61 +41,65 @@ and open the template in the editor.
             -webkit-border-radius: 60px;
             -moz-border-radius: 60px;
             border-radius: 60px;
-        }
+            margin-top: 700px;
 
+        }
+        .message-1{
+            float: right;
+            left: 150px;
+        }
         input{
             color: black !important;
         }
     </style>
     <div class="container">
 
-<% 
-    String level = "1",resultdisp="";
-    int result = 0,intlevel;
-    Enumeration enParams = request.getParameterNames(); 
-            while(enParams.hasMoreElements()){
-            
-             String paramName = (String)enParams.nextElement();
-             
-             //out.println("name - "+paramName+" value - "+request.getParameter(paramName));
-             if(paramName.equals("result")){ 
-                 result = Integer.parseInt(request.getParameter(paramName).trim());
-                 if(result == 1){
-                     out.println("pass");
-                     resultdisp = "Congratualations you have succesfuly advanced next level";
-                 }
-                 else if(result == 0){
-                     out.println("fail");
-                     resultdisp = "Sorry! you have failed this level";
-                 }
-                
-             }
-            if(paramName.equals("nextlevel")){
-                 out.println("you are going to "+request.getParameter(paramName));
-                 level = request.getParameter(paramName).trim();
-             
+        <%
+            String level = "1", resultdisp = "";
+            int result = 0, intlevel;
+            Enumeration enParams = request.getParameterNames();
+            while (enParams.hasMoreElements()) {
+
+                String paramName = (String) enParams.nextElement();
+
+                //out.println("name - "+paramName+" value - "+request.getParameter(paramName));
+                if (paramName.equals("result")) {
+                    result = Integer.parseInt(request.getParameter(paramName).trim());
+                    if (result == 1) {
+                        out.println("pass");
+                        resultdisp = "Congratualations you have succesfuly advanced next level";
+                    } else if (result == 0) {
+                        out.println("fail");
+                        resultdisp = "Sorry! you have failed this level";
+                    }
+
+                }
+                if (paramName.equals("nextlevel")) {
+                    out.println("you are going to " + request.getParameter(paramName));
+                    level = request.getParameter(paramName).trim();
+
+                }
+
             }
-             
-            }
-            out.println(level);
+            out.println("level=" + level);
             intlevel = Integer.parseInt(level);
-    %>
+        %>
         <div class="page-header">
             <h2>Welcome to Number Conversion Game</h2>
         </div>  
-    <% if (Integer.parseInt(level) < 4) { %>
+        <% if (Integer.parseInt(level) < 4) { %>
         <a  class="btn btn-primary" id="start">Start Game (Level <% out.println(level); %>)</a>
         <% } %>
         <div class="row">
-             <% if (Integer.parseInt(level) < 4) { %>
+            <% if (Integer.parseInt(level) < 4) { %>
             <div class="col-lg-4">
-             
-                <form method = "post" action ="/Numberconversionpro/process.jsp">
+
+                <form method = "post" action ="/Numberconversionpro/process.jsp" id="main-form">
                     From: Decimal to 
-                    <select>
-                        <option value="binary" name="binary">Binary</option>
-                        <option value="binary" name="ocatal">Octal</option>
-                        <option value="binary" name="hexa">Hexa</option>
+                    <select name="selectmenu" form="main-form">
+                        <option value="binary" >Binary</option>
+                        <option value="binary" >Octal</option>
+                        <option value="binary" >Hexa</option>
                     </select>
                     <input name="level" type="hidden" value="<% out.println(level);%>" />
                     <h3>Enter values here</h3>
@@ -111,24 +119,27 @@ and open the template in the editor.
 
                     <input type="submit" value="Submit"/>
                 </form>
-                    
+
             </div>
             <div class="col-lg-8">
                 <div class="row" id="result_disp" ><div class="col-lg-12"><h3><% out.println(resultdisp); %></h3></div></div>
                 <div class="pull-right"> Timer: <span id="timer">10</span></div>
-                <div id="parent" style="display: none">
-                    <% for (int i = 0; i < ((level == "1") ? 10 : level == "2" ? 20 :  20); i++) {
-                            Random rand = new Random();
-                            int n = rand.nextInt(100) + 1;
-                            System.out.println(n);
-                    %>
-                    <div class="message" onclick="clicked(<%=i%>,<%=n%>)">
-                        <span id="header_<%=i%>">Click for number</span>
-                        <span id="open_<%=i%>">
-                            <span id="number_<%=i%>"><%=n%></span> 
+                <div id="parent" class="center-block" style="display: none">
+
+                    <div class="message" style="display:none" ><span id="header">Click Me</span><span id="open_5"><span id="number_5"></span> 
                         </span>
-                    </div> 
-                    <% } %>
+                    </div>
+                    <div class="message" style="display:none" > <span id="header">Click Me</span><span id="open_1"> <span id="number_1"></span></span></div>
+                    <div class="message" style="display:none" > <span id="header">Click Me</span><span id="open_2"> <span id="number_2"></span></span></div>
+                    <div class="message" style="display:none" > <span id="header">Click Me</span><span id="open_3"> <span id="number_3"></span></span></div>
+                    <div class="message" style="display:none" > <span id="header">Click Me</span><span id="open_4"> <span id="number_4"></span></span></div>
+
+                    <!-- <div class="message-1 1" style="display:none"> <span id="header_">Click Me</span><span id="open_"> <span id="number_"></span></span></div>
+                    <div class="message-1 2" style="display:none"> <span id="header_">Click Me</span><span id="open_"> <span id="number_"></span></span></div>
+                    <div class="message-1 3" style="display:none"> <span id="header_">Click Me</span><span id="open_"> <span id="number_"></span></span></div>
+                    <div class="message-1 4" style="display:none"> <span id="header_">Click Me</span><span id="open_"> <span id="number_"></span></span></div>
+                    <div class="message-1 5" style="display:none"> <span id="header_">Click Me</span><span id="open_"> <span id="number_"></span></span></div>
+                    -->
                 </div>
                 <div id="secondary_div" style="display:none">
                     <h2>Game Over!</h2>
@@ -137,9 +148,9 @@ and open the template in the editor.
                     <div id="results_div">&nbsp;</div>
                 </div>
             </div>
-                <% } else { %>
-                <div id="result_div" class="col-xs-12"><h2>Congratulations you succesfully completed all the level</h2></div>
-                <% } %>
+            <% } else { %>
+            <div id="result_div" class="col-xs-12"><h2>Congratulations you succesfully completed all the level</h2></div>
+            <% } %>
         </div>
 
     </div>
@@ -153,95 +164,148 @@ and open the template in the editor.
     <!-- Latest compiled and minified JavaScript -->
     <script src="/Numberconversionpro/bootstrap.min.js" crossorigin="anonymous"></script>
     <script>
-    jQuery.fn.verticalMarquee = function (vertSpeed, horiSpeed, index) {
 
-        this.css('float', 'left');
+        var message = 1;
 
-        vertSpeed = 0.5;
-        horiSpeed = 1 / horiSpeed || 1;
+        /*   $(".message").click(function(){
+         console.log("clicked"+$(this));
+         //$(this).hide();
+         console.log($("#tbodyele"));
+         var val = Math.floor((Math.random() * 100) + 1);
+         $("#tbodyele").prepend("<tr><td>" + val + "</td><td>\n\
+         <input type='hidden' name='num" + val + "' value='" + val + "'/><input type='number' name='val" + val + "'/></td>\n\
+         </tr>");
+         $('#tbodyele :input:visible:enabled:first').focus();
+         
+         }); */
+        /*  $( '#parent' ).on( 'click', 'div', function () { 
+         
+         //$(this).hide();
+         console.log($("#tbodyele"));
+         var val = Math.floor((Math.random() * 100) + 1);
+         $("#tbodyele").prepend("<tr><td>" + val + "</td><td>\n\
+         <input type='hidden' name='num" + val + "' value='" + val + "'/><input type='number' name='val" + val + "'/></td>\n\
+         </tr>");
+         $('#tbodyele :input:visible:enabled:first').focus();
+         
+         
+         });
+         */
+        function clicked() {
 
-        var windowH = this.parent().height(),
-                thisH = this.height(),
-                parentW = (this.parent().width() - this.width()) / 2,
-                rand = Math.random() * (index * 1000),
-                current = this;
+            //$(this).hide();
 
-        this.css('margin-top', windowH + thisH);
-        this.parent().css('overflow', 'hidden');
-
-        setInterval(function () {
-            current.css({
-                marginTop: function (n, v) {
-                    return parseFloat(v) - vertSpeed;
-                }
-            });
-        }, 15);
-
-        //if we want to repeat same bubbles again and again enable it
-        /* setInterval(function() {
-         if (parseFloat(current.css('margin-top')) < -thisH) {
-         current.css('margin-top', windowH + thisH);
-         }
-         }, 250); */
-    };
-    var message = 1;
-    $('.message').each(function (message) {
-        $(this).verticalMarquee(1, 1, message);
-        message++
-    });
-    function clicked(id, val) {
-        console.log("clicked" + id);
-        var header = "#header_" + id;
-        var open = "#open_" + id;
-
-        $(header).hide();
-        $(open).show();
-
-        //append selected number to table for entering numbers and focus it
-        console.log($("#tbodyele"));
-        $("#tbodyele").prepend("<tr><td>" + val + "</td><td>\n\
+            var val = Math.floor((Math.random() * 100) + 1);
+            $("#tbodyele").prepend("<tr><td>" + val + "</td><td>\n\
         <input type='hidden' name='num" + val + "' value='" + val + "'/><input type='number' name='val" + val + "'/></td>\n\
             </tr>");
-        $('#tbodyele :input:visible:enabled:first').focus();
-    }
+            $('#tbodyele :input:visible:enabled:first').focus();
+            $(this).off("click");
+            console.log($('.header', $(this)).html());
+            $(this).html(val);
+        }
 
-    var timer = null,
-            interval = 1000,
-            value = 10;
-    var level = "<% out.print(level); %>";
-    if( level == "1")
+
+        var i = 0;
+        var bubbleiter = null;
+        /**
+         * 
+         * for all even numbers
+         */
+        var startbubbling = function () {
+
+            if (i == 6)
+                i = 0;
+            //console.log("func");
+
+            //console.log("iterating");
+            var ele = $(".message")[i];
+            $(ele).click(clicked);
+            //console.log(ele);
+            //  console.log($(ele).css('margin-top'));
+            $(ele).show();
+            $(ele).animate({'margin-top': '10px'}, 6000, (function (ele) {
+                return function () {
+                    console.log("moved");
+
+
+                    $(ele).hide("slow", function () {
+                        $(ele).css('margin-top', '700px');
+                        $(this).html("Click Me");
+
+                    });
+                    console.log("after" + $(ele).css('margin-top'));
+
+
+                }
+            })(ele));
+
+            i = i + 2;
+            console.log(i);
+
+
+
+
+        }
+
+
+        var timer = null,
+                interval = 1000,
+                value = 30;
+        var level = "<% out.print(level); %>";
+        if (level == "1")
             value = 30;
-        else if(level == "2")
+        else if (level == "2")
             value = 20;
-        else if(level == "3")
+        else if (level == "3")
             value = 20;
         $("#timer").html(value);
-        console.log("value="+value); 
-    $("#start").click(function () {
-        console.log("clicked start");
-        timer = null,
-            interval = 1000;
-            
+        console.log("value=" + value);
 
-        $("#secondary_div").hide();
-        $("#result_div").hide();
-        $("#result_disp").hide();
-        $("#parent").show();
-        
-        if (timer !== null)
-            return;
-        timer = setInterval(function () {
-            value = value - 1;
-            if (value == 0) {
-                clearInterval(timer);
-                timer = null;
-                $("#parent").hide();
-                $("#secondary_div").show();
-                console.log("showing secondary");
-            }
+
+        $("#start").click(function () {
+            console.log("clicked start");
+            timer = null,
+                    interval = 1000;
+
+            //re intialize all again
+
+            level = "<% out.print(level);%>";
+            if (level == "1")
+                value = 30;
+            else if (level == "2")
+                value = 20;
+            else if (level == "3")
+                value = 20;
             $("#timer").html(value);
-        }, interval);
-    });
+            console.log("value=" + value);
+
+
+            $("#secondary_div").hide();
+            $("#result_div").hide();
+            $("#result_disp").hide();
+            $("#parent").show();
+
+            if (timer !== null)
+                return;
+            timer = setInterval(function () {
+                value = value - 1;
+                if (value == 0) {
+                    clearInterval(timer);
+                    clearInterval(bubbleiter);
+                    timer = null;
+                    $("#parent").hide();
+                    $("#secondary_div").show();
+                    console.log("showing secondary");
+                }
+                $("#timer").html(value);
+            }, interval);
+
+            //call lazyload function
+            startbubbling();
+            bubbleiter = setInterval(startbubbling, 5000);
+            console.log("after called");
+        });
 
     </script>
 </body>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            parent {
+
+    left: 0;
+    top: 0;
+    width: 400px;
+    height: 100%;
+}
+
+.message,.message-1 {
+    height: 120px;
+    width: 120px;
+    background-color: orange;
+    color: white;
+    z-index: -9999;
+    line-height: 115px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    border-radius: 60px;
+}
+
+            </style>
+       <div id="parent">
+    <div class="message">Hello world</div>
+    <div class="message">Hello world</div>
+    <div class="message">Hello world</div>
+    
+</div>
+        <script src="/Numberconversionpro/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/Numberconversionpro/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/Numberconversionpro/bootstrap.min.js" crossorigin="anonymous"></script>
+    
+        <script>
+            jQuery.fn.verticalMarquee = function(vertSpeed, horiSpeed, index) {
+   
+    this.css('float', 'left');
+
+    vertSpeed = 2;
+    horiSpeed =2;
+
+    var windowH = this.parent().height(),
+        thisH = this.height(),
+        parentW = (this.parent().width() - this.width()) / 2,
+        rand = Math.random() * (index * 1000),
+        current = this;
+
+    this.css('margin-top', windowH + thisH);
+    this.parent().css('overflow', 'hidden');
+
+    setInterval(function() {
+        current.css({
+            marginTop: function(n, v) {
+                return parseFloat(v) - vertSpeed;
+            },
+            marginLeft: function(n, v) {
+                return (Math.sin(new Date().getTime() / (horiSpeed * 1000) + rand) + 1) * parentW;
+            }
+        });
+    }, 15);
+
+    setInterval(function() {
+        if (parseFloat(current.css('margin-top')) < -thisH) {
+            current.css('margin-top', windowH + thisH);
+        }
+    }, 250);
+};
+var message = 1;
+$('.message').each(function(message) {  
+    $(this).verticalMarquee(1, 1, message);
+    message++
+    console.log("iterating");
+});
+
+            </script>
+    </body>
+</html>
