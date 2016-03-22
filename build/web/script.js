@@ -94,14 +94,14 @@
 
         var timer = null,
                 interval = 1000,
-                value = 30;
+                value = 60;
         var level = "<% out.print(level); %>";
         if (level == "1")
-            value = 30;
+                value = 60;
         else if (level == "2")
-            value = 20;
+            value = 50;
         else if (level == "3")
-            value = 20;
+            value = 40;
         $("#timer").html(value);
         console.log("value=" + value);
 

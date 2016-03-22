@@ -51,7 +51,7 @@ and open the template in the editor.
             <h1 class="text-center">Welcome to Number Conversion Game</h1>
         </div>  
         <% if (Integer.parseInt(level) < 4) { %>
-        <h3><a  class="btn btn-lg btn-primary" id="start"> Start Game ( Level <% out.println(level); %>)</a></h3>
+        <h3 class="text-center"><a  class="btn btn-lg btn-primary" id="start"> Start Game ( Level <% out.println(level); %>)</a></h3>
         <% } %>
         <div class="row main-container">
             <% if (Integer.parseInt(level) < 4) { %>
@@ -96,6 +96,18 @@ and open the template in the editor.
             <div class="col-lg-8">
                 <div class="row" id="result_disp" ><div class="col-lg-12"><h3><% out.println(resultdisp); %></h3></div></div>
                 <div class="pull-right"> <label>Timer: <span id="timer">60</label></span></div>
+                <div id="inst">
+                    <label>Instructions:</label>
+                    <% if (Integer.parseInt(level) == 1) { %>
+                    <span>You have 60 seconds time to answer at least 6 correct answers to pass this level </span>
+                    <% } %>
+                    <% if (Integer.parseInt(level) == 2) { %>
+                    <span>You have 50 seconds time to answer at least 7 correct answers to pass this level </span>
+                    <% } %>
+                    <% if (Integer.parseInt(level) == 3) { %>
+                    <span>You have 40 seconds time to answer at least 6 correct answers to pass this level </span>
+                    <% } %>
+                </div>
                 <div id="parent" class="center-block" style="display: none">
 
                     <div class="message" style="display:none" ><span id="header">Click Me</span><span id="open_5"><span id="number_5"></span> 
