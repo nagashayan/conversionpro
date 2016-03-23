@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+/**
+ * 
+ * AS WE ARE ACCESSING AND NEED JSP VARIABLES WE CAN'T USE SEPERATE .JS FILE HERE
+ */
 
 
 
@@ -108,12 +111,14 @@
 
         $("#start").click(function () {
             console.log("clicked start");
+            //if(timer != null)
+                window.clearInterval(timer);//reset timer
             timer = null,
                     interval = 1000;
 
             //re intialize all again
 
-            level = "<% out.print(level);%>";
+            level = "<%= level;%>";
             if (level == "1")
                 value = 60;
             else if (level == "2")
@@ -121,9 +126,9 @@
             else if (level == "3")
                 value = 40;
             $("#timer").html(value);
-            console.log("value=" + value);
+            console.log("value=" + value+$("#timer").html());
 
-
+            //$("#inst").hide();
             $("#secondary_div").hide();
             $("#result_div").hide();
             $("#result_disp").hide();
