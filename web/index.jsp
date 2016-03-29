@@ -66,7 +66,7 @@ and open the template in the editor.
                 
                 <form method = "post" action ="/Numberconversionpro/process.jsp" id="main-form">
                    <h4> From Decimal to : 
-                    <select name="selectmenu" form="main-form">
+                    <select id="convert-selector" name="selectmenu" form="main-form">
                         <option value="binary" >Binary</option>
                         <option value="octal" >Octal</option>
                         <option value="hexa" >Hexa</option>
@@ -241,7 +241,8 @@ and open the template in the editor.
             //if(timer != null)
             window.clearInterval(timer);//reset timer
             $('#inputtable tr').not(function(){if ($(this).has('th').length){return true}}).remove();
-
+            //disable type changer
+            $('#convert-selector').attr('disabled','disabled');
             timer = null,
                     interval = 1000;
 
@@ -275,6 +276,7 @@ and open the template in the editor.
                     $("#secondary_div").show();
                     console.log("showing secondary");
                     $("#inputtable").find("input,button,textarea,select").attr("disabled", "disabled");
+                    $('#convert-selector').removeAttr('disabled');
                 }
                 $("#timer").html(value);
             }, interval);
@@ -298,6 +300,7 @@ and open the template in the editor.
             $("#secondary_div").show();
             console.log("showing secondary");
             $("#inputtable").find("input,button,textarea,select").attr("disabled", "disabled");
+            $('#convert-selector').removeAttr('disabled');
         });
     
     </script>
