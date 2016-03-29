@@ -32,7 +32,7 @@ and open the template in the editor.
                         //out.println("pass");
                         resultdisp = "Congratualations you have succesfuly advanced next level";
                     } else if (result == 0) {
-                        out.println("fail");
+                        //out.println("fail");
                         resultdisp = "Sorry! you have failed this level";
                     }
 
@@ -231,7 +231,7 @@ and open the template in the editor.
             value = 40;
         $("#timer").html(value);
         console.log("value=" + value);
-
+        $('#convert-selector').removeAttr('disabled');
         /*
          * 
          * when start game button is clicked
@@ -276,7 +276,7 @@ and open the template in the editor.
                     $("#secondary_div").show();
                     console.log("showing secondary");
                     $("#inputtable").find("input,button,textarea,select").attr("disabled", "disabled");
-                    $('#convert-selector').removeAttr('disabled');
+                    //$('#convert-selector').removeAttr('disabled');
                 }
                 $("#timer").html(value);
             }, interval);
