@@ -76,16 +76,24 @@ and open the template in the editor.
                 
                 <form method = "post" action ="/Numberconversionpro/process.jsp" id="main-form">
                     <input name="level" type="hidden" value="<% out.print(level);%>" />
+                    <input name="fromselectmenu" type="hidden" id="from-select-menu-hidden" value="binary" />
                     <input name="points" type="hidden" value="<% out.print(points);%>" />
-                   <h4> From Decimal to : 
+                    <input name="selectmenu" type="hidden" id="select-menu-hidden" value="binary" />
+                   <h4> From <select id="convert-selector-from" form="main-form" onchange="fromselectorchange()">
+                        <option value="decimal" >Decimal</option>
+                        <option value="binary" >Binary</option>
+                        <option value="octal" >Octal</option>
+                        <option value="hexa" >Hexa</option>
+                    </select> to : 
                        <select id="convert-selector" form="main-form" onchange="selectorchange()">
                         <option value="binary" >Binary</option>
                         <option value="octal" >Octal</option>
+                        <option value="decimal" >Decimal</option>
                         <option value="hexa" >Hexa</option>
                     </select>
                     </h4>
                     
-                    <input name="selectmenu" type="hidden" id="select-menu-hidden" value="binary" />
+                    
                     
                     <div class="panel panel-success">
                         <div class="panel-heading"> <h3>Enter values here</h3></div>
@@ -192,6 +200,15 @@ and open the template in the editor.
                 var val = Math.floor((Math.random() * 50) + 1);
             else 
                 var val = Math.floor((Math.random() * 100) + 1);
+            var type = $('#convert-selector-from').val();
+            console.log("from type ="+type);
+            if(type == "binary")
+                val = val.toString(2);
+            else if(type == "octal")
+                val = val.toString(8);
+            else if(type == "hexa"){
+                val = val.toString(16).toUpperCase();
+            }
             
             $("#tbodyele").prepend("<tr><td>" + val + "</td><td>\n\
         <input type='hidden' name='num" + val + "' value='" + val + "'/><input type='text' name='val" + val + "'/></td>\n\
@@ -260,17 +277,24 @@ and open the template in the editor.
         $("#timer").html(value);
         console.log("value=" + value);
         $('#convert-selector').removeAttr('disabled');
+        $('#convert-selector-from').removeAttr('disabled');
         /*
          * 
          * when start game button is clicked
          */
         $("#start").click(function () {
+            //check if user has not selected both from and to same type
+            if($('#convert-selector').val() == $('#convert-selector-from').val()){
+                alert("Please select different from and to types");
+            }
+            else{
             console.log("clicked start");
             //if(timer != null)
             window.clearInterval(timer);//reset timer
             $('#inputtable tr').not(function(){if ($(this).has('th').length){return true}}).remove();
             //disable type changer
             $('#convert-selector').attr('disabled','disabled');
+            $('#convert-selector-from').attr('disabled','disabled');
             timer = null,
                     interval = 1000;
 
@@ -305,7 +329,7 @@ and open the template in the editor.
                     console.log("showing secondary");
                     $("#inputtable").find("input,button,textarea,select").attr("readonly", "readonly");
                     $('#convert-selector').attr('disabled','disabled');
-                    //$('#convert-selector').removeAttr('disabled');
+                    $('#convert-selector-from').attr('disabled','disabled');
                 }
                 $("#timer").html(value);
             }, interval);
@@ -314,6 +338,7 @@ and open the template in the editor.
             startbubbling();
             bubbleiter = setInterval(startbubbling, 5000);
             console.log("after called");
+        }
         });
 
         /**
@@ -330,11 +355,15 @@ and open the template in the editor.
             console.log("showing secondary");
             $("#inputtable").find("input,button,textarea").attr("disabled", "disabled");
             $('#convert-selector').removeAttr('disabled');
+            $('#convert-selector-from').removeAttr('disabled');
         });
             
        
     var selectorchange = function(){
         $("#select-menu-hidden").val($('#convert-selector').val());
+    }
+    var fromselectorchange = function(){
+        $("#from-select-menu-hidden").val($('#convert-selector-from').val());
     }
     </script>
     

@@ -21,7 +21,7 @@
         <% 
             out.println("To out-put All the request parameters received from request - ");
             int correctanscount = 0, points = 0;
-            String number = "",level = "",value = "",type="",res="";
+            String number = "",level = "",value = "",type="",res="",fromtype = "";
             Enumeration enParams = request.getParameterNames(); 
             while(enParams.hasMoreElements()){
              if(correctanscount < 10){   
@@ -40,7 +40,27 @@
                  value = request.getParameter(paramName).trim();
                 out.println("in 2 type ="+type+"number ="+number);
                  if(number.length() > 0){
+                      out.println("from type ="+fromtype);
+                     //any number except decimal convert to decimal 
+                     if(!fromtype.equals("decimal")){
+                         //convert number to decimal first 
+                         if(fromtype.equals("binary")){
+                             number = Integer.toString(Integer.parseInt(number,2));
+                             out.println("after conv"+number);
+                         }
+                         else if(fromtype.equals("octal")){
+                             number = Integer.toString(Integer.parseInt(number,8));
+                             out.println("after conv"+number);
+                         }
+                         else if(fromtype.equals("hexa")){
+                             number = Integer.toString(Integer.parseInt(number,16));
+                             out.println("after conv"+number);
+                         }
+                     }
+                     
                      if(type.equals("binary")){
+                        
+                        
                         res = Integer.toBinaryString(Integer.parseInt(number));
                         out.println("in binary");
                      }
@@ -49,6 +69,9 @@
                      }
                      else if(type.equals("octal")){
                         res = Integer.toOctalString(Integer.parseInt(number));
+                     }
+                     else if(type.equals("decimal")){
+                        res = number;
                      }
                      out.println("checking val="+value+"res ="+res.trim().toUpperCase());
                      if(res.trim().toUpperCase().equals(value.trim())){
@@ -69,6 +92,10 @@
              else if(paramName.equals("points")){
                  out.println("in points");
                 points = Integer.parseInt(request.getParameter(paramName).trim()); 
+             }
+            else if(paramName.equals("fromselectmenu")){
+                 out.println("in from type");
+                fromtype = request.getParameter(paramName).trim(); 
              }
              }
              
