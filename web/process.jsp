@@ -38,7 +38,7 @@
                  
                  //it will be value
                  value = request.getParameter(paramName).trim();
-                out.println("in 2 type ="+type+"number ="+number+"convert"+Integer.toBinaryString(Integer.parseInt(number)));
+                out.println("in 2 type ="+type+"number ="+number);
                  if(number.length() > 0){
                      if(type.equals("binary")){
                         res = Integer.toBinaryString(Integer.parseInt(number));
@@ -50,7 +50,7 @@
                      else if(type.equals("octal")){
                         res = Integer.toOctalString(Integer.parseInt(number));
                      }
-                     out.println("checking val="+value+"res ="+res);
+                     out.println("checking val="+value+"res ="+res.trim().toUpperCase());
                      if(res.trim().toUpperCase().equals(value.trim())){
                          out.println("its correct");
                          correctanscount++;

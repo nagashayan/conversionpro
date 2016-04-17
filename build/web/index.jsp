@@ -117,9 +117,10 @@ and open the template in the editor.
                 <div class="row" id="result_disp" ><div class="col-lg-12"><h3><% out.print(resultdisp); %></h3>
                         <h4><% out.print("No of Correct Answers: "+correctanswerscount); %></h4></div></div>
                    <div class="pull-right"> <label>Timer: <span id="timer">100</label></span></div>
-                   <div class="row"><div class="col-xs-12"><div class="pull-right"> <label>Total Points: <span id="timer"><% out.print(points); %></label></span></div></div>
-                   </div>
-                <div id="inst">
+                   <div class="pull-right" style="margin-right: 15px;"> <label>Total Points: <span id="timer"><% out.print(points); %></label></span></div>
+                   
+                <div id="inst" class="row">
+                    <div class="col-xs-12">
                     <label>Instructions:</label>
                     <% if (Integer.parseInt(level) == 1) { %>
                     <span>You have 100 seconds time to answer at least 6 correct answers to pass this level </span>
@@ -130,6 +131,7 @@ and open the template in the editor.
                     <% if (Integer.parseInt(level) == 3) { %>
                     <span>You have 100 seconds time to answer at least 6 correct answers to pass this level </span>
                     <% } %>
+                    </div>
                 </div>
                 <div id="parent" class="center-block" style="display: none">
 
@@ -156,10 +158,11 @@ and open the template in the editor.
                 </div>
             </div>
             <% } else { %>
-            <div id="result_div" class="col-xs-12"><h2>Congratulations! you successfully completed all the level</h2>
+            <div id="result_div" class="col-xs-12 text-center"><h2>Congratulations! you have successfully completed all the levels</h2>
             <h4><% out.print("No of Correct Answers: "+correctanswerscount); %></h4>
+            <div class="row"><div class="col-xs-12 text-center"> <h3>Total Points: <% out.print(points); %></h3></div></div>
             <h3 ><a  href="http://localhost:8080/Numberconversionpro/index.jsp" class="btn btn-lg btn-primary" id="start"> Re-Start Game ( Level 1)</a></h3>
-            <div class="row"><div class="col-xs-12"><div class="pull-right"> <label>Total Points: <span id="timer"><% out.print(points); %></label></span></div></div></div>
+            
             </div>
             <% } %>
         </div>
