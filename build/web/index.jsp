@@ -18,7 +18,7 @@ and open the template in the editor.
     <div class="container wrapper">
 
         <%
-            String level = "1", resultdisp = "";
+            String level = "1", resultdisp = "", points = "0",correctanswerscount = "0";
             int result = 0, intlevel;
             Enumeration enParams = request.getParameterNames();
             while (enParams.hasMoreElements()) {
@@ -30,7 +30,7 @@ and open the template in the editor.
                     result = Integer.parseInt(request.getParameter(paramName).trim());
                     if (result == 1) {
                         //out.println("pass");
-                        resultdisp = "Congratualations you have succesfuly advanced next level";
+                        resultdisp = "Congratualations! you have successfully advanced to next level";
                     } else if (result == 0) {
                         //out.println("fail");
                         resultdisp = "Sorry! you have failed this level";
@@ -40,6 +40,16 @@ and open the template in the editor.
                 if (paramName.equals("nextlevel")) {
                     //out.println("you are going to " + request.getParameter(paramName));
                     level = request.getParameter(paramName).trim();
+
+                }
+                if (paramName.equals("points")) {
+                    //out.println("you are going to " + request.getParameter(paramName));
+                    points = request.getParameter(paramName).trim();
+
+                }
+                if (paramName.equals("correctanswerscount")) {
+                    //out.println("you are going to " + request.getParameter(paramName));
+                    correctanswerscount = request.getParameter(paramName).trim();
 
                 }
 
@@ -65,14 +75,17 @@ and open the template in the editor.
             <div class="col-lg-4">
                 
                 <form method = "post" action ="/Numberconversionpro/process.jsp" id="main-form">
+                    <input name="level" type="hidden" value="<% out.print(level);%>" />
+                    <input name="points" type="hidden" value="<% out.print(points);%>" />
                    <h4> From Decimal to : 
-                    <select id="convert-selector" name="selectmenu" form="main-form">
+                       <select id="convert-selector" form="main-form" onchange="selectorchange()">
                         <option value="binary" >Binary</option>
                         <option value="octal" >Octal</option>
                         <option value="hexa" >Hexa</option>
                     </select>
                     </h4>
-                    <input name="level" type="hidden" value="<% out.println(level);%>" />
+                    
+                    <input name="selectmenu" type="hidden" id="select-menu-hidden" value="binary" />
                     
                     <div class="panel panel-success">
                         <div class="panel-heading"> <h3>Enter values here</h3></div>
@@ -101,18 +114,21 @@ and open the template in the editor.
 
             </div>
             <div class="col-lg-8">
-                <div class="row" id="result_disp" ><div class="col-lg-12"><h3><% out.println(resultdisp); %></h3></div></div>
-                <div class="pull-right"> <label>Timer: <span id="timer">60</label></span></div>
+                <div class="row" id="result_disp" ><div class="col-lg-12"><h3><% out.print(resultdisp); %></h3>
+                        <h4><% out.print("No of Correct Answers: "+correctanswerscount); %></h4></div></div>
+                   <div class="pull-right"> <label>Timer: <span id="timer">100</label></span></div>
+                   <div class="row"><div class="col-xs-12"><div class="pull-right"> <label>Total Points: <span id="timer"><% out.print(points); %></label></span></div></div>
+                   </div>
                 <div id="inst">
                     <label>Instructions:</label>
                     <% if (Integer.parseInt(level) == 1) { %>
-                    <span>You have 60 seconds time to answer at least 6 correct answers to pass this level </span>
+                    <span>You have 100 seconds time to answer at least 6 correct answers to pass this level </span>
                     <% } %>
                     <% if (Integer.parseInt(level) == 2) { %>
-                    <span>You have 50 seconds time to answer at least 7 correct answers to pass this level </span>
+                    <span>You have 80 seconds time to answer at least 7 correct answers to pass this level </span>
                     <% } %>
                     <% if (Integer.parseInt(level) == 3) { %>
-                    <span>You have 40 seconds time to answer at least 6 correct answers to pass this level </span>
+                    <span>You have 100 seconds time to answer at least 6 correct answers to pass this level </span>
                     <% } %>
                 </div>
                 <div id="parent" class="center-block" style="display: none">
@@ -140,7 +156,11 @@ and open the template in the editor.
                 </div>
             </div>
             <% } else { %>
-            <div id="result_div" class="col-xs-12"><h2>Congratulations you succesfully completed all the level</h2></div>
+            <div id="result_div" class="col-xs-12"><h2>Congratulations! you successfully completed all the level</h2>
+            <h4><% out.print("No of Correct Answers: "+correctanswerscount); %></h4>
+            <h3 ><a  href="http://localhost:8080/Numberconversionpro/index.jsp" class="btn btn-lg btn-primary" id="start"> Re-Start Game ( Level 1)</a></h3>
+            <div class="row"><div class="col-xs-12"><div class="pull-right"> <label>Total Points: <span id="timer"><% out.print(points); %></label></span></div></div></div>
+            </div>
             <% } %>
         </div>
 
@@ -159,12 +179,17 @@ and open the template in the editor.
     
     <script type="text/javascript">
           var message = 1;
-
+        var level = "<%=level %>";
         function clicked() {
 
             //$(this).hide();
-
-            var val = Math.floor((Math.random() * 100) + 1);
+            if(level == "1")
+                var val = Math.floor((Math.random() * 20) + 1);
+            else if(level == "2")
+                var val = Math.floor((Math.random() * 50) + 1);
+            else 
+                var val = Math.floor((Math.random() * 100) + 1);
+            
             $("#tbodyele").prepend("<tr><td>" + val + "</td><td>\n\
         <input type='hidden' name='num" + val + "' value='" + val + "'/><input type='text' name='val" + val + "'/></td>\n\
             </tr>");
@@ -221,14 +246,14 @@ and open the template in the editor.
 
         var timer = null,
                 interval = 1000,
-                value = 60;
-        var level = "<%=level %>";
+                value = 100;
+        
         if (level == "1")
-                value = 60;
+                value = 100;
         else if (level == "2")
-            value = 50;
+            value = 80;
         else if (level == "3")
-            value = 40;
+            value = 100;
         $("#timer").html(value);
         console.log("value=" + value);
         $('#convert-selector').removeAttr('disabled');
@@ -250,11 +275,11 @@ and open the template in the editor.
 
             level = "<%= level%>";
             if (level == "1")
-                value = 60;
+                value = 100;
             else if (level == "2")
-                value = 50;
+                value = 80;
             else if (level == "3")
-                value = 40;
+                value = 100;
             $("#timer").html(value);
             console.log("value=" + value+$("#timer").html());
 
@@ -275,7 +300,8 @@ and open the template in the editor.
                     $("#parent").hide();
                     $("#secondary_div").show();
                     console.log("showing secondary");
-                    $("#inputtable").find("input,button,textarea,select").attr("disabled", "disabled");
+                    $("#inputtable").find("input,button,textarea,select").attr("readonly", "readonly");
+                    $('#convert-selector').attr('disabled','disabled');
                     //$('#convert-selector').removeAttr('disabled');
                 }
                 $("#timer").html(value);
@@ -299,10 +325,14 @@ and open the template in the editor.
             $("#parent").hide();
             $("#secondary_div").show();
             console.log("showing secondary");
-            $("#inputtable").find("input,button,textarea,select").attr("disabled", "disabled");
+            $("#inputtable").find("input,button,textarea").attr("disabled", "disabled");
             $('#convert-selector').removeAttr('disabled');
         });
-    
+            
+       
+    var selectorchange = function(){
+        $("#select-menu-hidden").val($('#convert-selector').val());
+    }
     </script>
     
 </body>

@@ -20,7 +20,7 @@
         
         <% 
             out.println("To out-put All the request parameters received from request - ");
-            int correctanscount = 0;
+            int correctanscount = 0, points = 0;
             String number = "",level = "",value = "",type="",res="";
             Enumeration enParams = request.getParameterNames(); 
             while(enParams.hasMoreElements()){
@@ -35,21 +35,26 @@
                  number = request.getParameter(paramName).trim();
             }
              else if(paramName.indexOf("val") != -1){
-                 out.println("in 2"+type);
+                 
                  //it will be value
                  value = request.getParameter(paramName).trim();
-                
+                out.println("in 2 type ="+type+"number ="+number+"convert"+Integer.toBinaryString(Integer.parseInt(number)));
                  if(number.length() > 0){
-                     if(type.equals("bin"))
+                     if(type.equals("binary")){
                         res = Integer.toBinaryString(Integer.parseInt(number));
-                     else if(type.equals("hexa"))
+                        out.println("in binary");
+                     }
+                     else if(type.equals("hexa")){
                         res = Integer.toHexString(Integer.parseInt(number));
-                     else if(type.equals("octal"))
+                     }
+                     else if(type.equals("octal")){
                         res = Integer.toOctalString(Integer.parseInt(number));
+                     }
                      out.println("checking val="+value+"res ="+res);
                      if(res.trim().toUpperCase().equals(value.trim())){
                          out.println("its correct");
                          correctanscount++;
+                         points = points + 10;
                      } 
                  }
              }
@@ -61,31 +66,38 @@
                  out.println("in type");
                 type = request.getParameter(paramName).trim(); 
              }
-             
+             else if(paramName.equals("points")){
+                 out.println("in points");
+                points = Integer.parseInt(request.getParameter(paramName).trim()); 
+             }
              }
              
             }
          //for each level different answer count
-         int anscount = 6,temp = (Integer.parseInt(level));
+         int anscount = 2,temp = (Integer.parseInt(level));
          if(temp == 2){
-             anscount = 7;
+             anscount = 2;
          }
          else if(temp == 3){
-             anscount = 6;
+             anscount = 2;
          }
          
          if(correctanscount >= anscount){
             //user has passed to second round
 
-         String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel="+(temp+1));
+         String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel="+(temp+1)+"&&correctanswerscount="+correctanscount+"&&points="+points);
+         out.println(site);
            response.setStatus(response.SC_MOVED_TEMPORARILY);
            response.setHeader("Location", site); 
 
                  
+                 
              }
          else{
+             points = points - ( correctanscount * 10);
             //level failed
-            String site = new String("/Numberconversionpro/index.jsp?result=0&&nextlevel="+temp);
+            String site = new String("/Numberconversionpro/index.jsp?result=0&&nextlevel="+temp+"&&correctanswerscount="+correctanscount+"&&points="+points);
+            out.println(site);
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader("Location", site);   
 
