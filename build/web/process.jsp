@@ -40,9 +40,11 @@
                  value = request.getParameter(paramName).trim();
                 out.println("in 2 type ="+type+"number ="+number);
                  if(number.length() > 0){
-                      out.println("from type ="+fromtype);
+                      out.println("from type ="+fromtype);  
                      //any number except decimal convert to decimal 
-                     if(!fromtype.equals("decimal")){
+                    if(!fromtype.equals("decimal")){
+                        out.println("dec");
+                        
                          //convert number to decimal first 
                          if(fromtype.equals("binary")){
                              number = Integer.toString(Integer.parseInt(number,2));
@@ -57,7 +59,7 @@
                              out.println("after conv"+number);
                          }
                      }
-                     
+                    
                      if(type.equals("binary")){
                         
                         
@@ -101,18 +103,19 @@
              
             }
          //for each level different answer count
-         int anscount = 2,temp = (Integer.parseInt(level));
+         int anscount = 7,temp = (Integer.parseInt(level));
          if(temp == 2){
-             anscount = 2;
+             anscount = 6;
          }
          else if(temp == 3){
-             anscount = 2;
+             anscount = 7;
          }
          
          if(correctanscount >= anscount){
             //user has passed to second round
 
-         String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel="+(temp+1)+"&&correctanswerscount="+correctanscount+"&&points="+points);
+         String site = new String("/Numberconversionpro/index.jsp?result=1&&nextlevel="+(temp+1)+"&&correctanswerscount="+correctanscount+"&&points="+points
+         +"&&fromtype="+fromtype+"&&totype="+type);
          out.println(site);
            response.setStatus(response.SC_MOVED_TEMPORARILY);
            response.setHeader("Location", site); 
@@ -123,7 +126,8 @@
          else{
              points = points - ( correctanscount * 10);
             //level failed
-            String site = new String("/Numberconversionpro/index.jsp?result=0&&nextlevel="+temp+"&&correctanswerscount="+correctanscount+"&&points="+points);
+            String site = new String("/Numberconversionpro/index.jsp?result=0&&nextlevel="+temp+"&&correctanswerscount="+correctanscount+"&&points="+points
+            +"&&fromtype="+fromtype+"&&totype="+type);
             out.println(site);
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader("Location", site);   

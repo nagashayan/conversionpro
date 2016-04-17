@@ -18,7 +18,7 @@ and open the template in the editor.
     <div class="container wrapper">
 
         <%
-            String level = "1", resultdisp = "", points = "0",correctanswerscount = "0";
+            String level = "1", resultdisp = "", points = "0",correctanswerscount = "0", fromtype = "decimal",totype = "binary";
             int result = 0, intlevel;
             Enumeration enParams = request.getParameterNames();
             while (enParams.hasMoreElements()) {
@@ -52,6 +52,16 @@ and open the template in the editor.
                     correctanswerscount = request.getParameter(paramName).trim();
 
                 }
+                if (paramName.equals("fromtype")) {
+                    //out.println("you are going to " + request.getParameter(paramName));
+                    fromtype = request.getParameter(paramName).trim();
+
+                }
+                if (paramName.equals("totype")) {
+                    //out.println("you are going to " + request.getParameter(paramName));
+                    totype = request.getParameter(paramName).trim();
+
+                }
 
             }
             //out.println("level=" + level);
@@ -75,10 +85,10 @@ and open the template in the editor.
             <div class="col-lg-4">
                 
                 <form method = "post" action ="/Numberconversionpro/process.jsp" id="main-form">
-                    <input name="level" type="hidden" value="<% out.print(level);%>" />
-                    <input name="fromselectmenu" type="hidden" id="from-select-menu-hidden" value="binary" />
+                    <input name="level" type="hidden" id="levelele" value="<% out.print(level);%>" />
+                    <input name="fromselectmenu" type="hidden" id="from-select-menu-hidden" value="<% out.print(fromtype); %>" />
                     <input name="points" type="hidden" value="<% out.print(points);%>" />
-                    <input name="selectmenu" type="hidden" id="select-menu-hidden" value="binary" />
+                    <input name="selectmenu" type="hidden" id="select-menu-hidden" value="<% out.print(totype); %>" />
                    <h4> From <select id="convert-selector-from" form="main-form" onchange="fromselectorchange()">
                         <option value="decimal" >Decimal</option>
                         <option value="binary" >Binary</option>
@@ -360,11 +370,20 @@ and open the template in the editor.
             
        
     var selectorchange = function(){
+        if(parseInt($("#levelele").val()) >= 2){
+            window.location.href = "http://localhost:8080/Numberconversionpro/index.jsp";
+        }
         $("#select-menu-hidden").val($('#convert-selector').val());
     }
     var fromselectorchange = function(){
+        if(parseInt($("#levelele").val()) >= 2){
+            window.location.href = "http://localhost:8080/Numberconversionpro/index.jsp";
+        }
         $("#from-select-menu-hidden").val($('#convert-selector-from').val());
     }
+    
+    $('#convert-selector').val($("#select-menu-hidden").val());
+    $('#convert-selector-from').val($("#from-select-menu-hidden").val());
     </script>
     
 </body>
