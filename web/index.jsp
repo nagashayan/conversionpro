@@ -200,6 +200,7 @@ and open the template in the editor.
     
     <script type="text/javascript">
           var message = 1;
+          var bubblecount = 1;
         var level = "<%=level %>";
         function clicked() {
 
@@ -219,9 +220,9 @@ and open the template in the editor.
             else if(type == "hexa"){
                 val = val.toString(16).toUpperCase();
             }
-            
+            bubblecount = bubblecount + 1;
             $("#tbodyele").prepend("<tr><td>" + val + "</td><td>\n\
-        <input type='hidden' name='num" + val + "' value='" + val + "'/><input type='text' name='val" + val + "'/></td>\n\
+        <input type='hidden' name='num" + bubblecount + "' value='" + val + "'/><input type='text' name='val" + bubblecount + "'/></td>\n\
             </tr>");
             $('#tbodyele :input:visible:enabled:first').focus();
             $(this).off("click");
@@ -356,6 +357,7 @@ and open the template in the editor.
          * 
          */
         $("#end").click(function () {
+            bubblecount = 1;
             window.clearInterval(timer);//reset timer
             $('#inputtable tr').not(function(){if ($(this).has('th').length){return true}}).remove();
             timer = null;
